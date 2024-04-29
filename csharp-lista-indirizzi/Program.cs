@@ -11,9 +11,11 @@ namespace csharp_lista_indirizzi
             string filePath = "C:\\Users\\39327\\source\\repos\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\addresses.csv";
             List<Address> addressList = ReadAddressesFromFile(filePath);
             PrintAddresses(addressList);
+            Utility.Divider();
 
             string outputFilePath = "C:\\Users\\39327\\source\\repos\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\output_addresses.csv";
             SaveAddressesToFile(addressList, outputFilePath);
+            Utility.Divider();
         }
 
         private static List<Address> ReadAddressesFromFile(string filePath)
@@ -100,6 +102,8 @@ namespace csharp_lista_indirizzi
 
         private static void PrintAddresses(List<Address> addresses)
         {
+            Utility.Divider();
+            Console.WriteLine("\n-- Address list --");
             foreach (var address in addresses)
             {
                 Console.WriteLine($"\n* Name: .......... {address.Name} " +
@@ -127,7 +131,8 @@ namespace csharp_lista_indirizzi
                     }
                 }
 
-                Console.WriteLine($"\nAddresses saved successfully to file: {filePath}");
+                Console.WriteLine($"\nAddresses saved successfully!! " +
+                                  $"\nFilepath: {filePath}");
             }
             catch (Exception ex)
             {
