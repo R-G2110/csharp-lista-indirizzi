@@ -55,19 +55,19 @@ namespace csharp_lista_indirizzi
             get { return _province; }
             set
             {
-                string trimmedValue = value.Trim(); // Trim once and use this trimmed value throughout
+                string trimmedValue = value.Trim(); 
 
-                // Check if the trimmed value is empty
+                
                 if (string.IsNullOrEmpty(trimmedValue))
                 {
                     throw new ArgumentException("Province cannot be empty or just whitespace.");
                 }
-                // Check for length constraints
+                
                 if (trimmedValue.Length > 2)
                 {
                     throw new ArgumentException("Province must be a maximum of 2 characters long.");
                 }
-                // Check for character validity
+                
                 if (!trimmedValue.All(char.IsLetter))
                 {
                     throw new ArgumentException("Province should contain only letters.");

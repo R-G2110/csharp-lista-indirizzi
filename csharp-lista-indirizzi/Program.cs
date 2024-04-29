@@ -8,16 +8,25 @@ namespace csharp_lista_indirizzi
     {
         public static void Main(string[] args)
         {
+            // Definizione dell'indirizzo file csv
             string filePath = "C:\\Users\\39327\\source\\repos\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\addresses.csv";
+
+            // Creazione lista indirizzi tramite lettura del file csv
             List<Address> addressList = ReadAddressesFromFile(filePath);
+
+            // Stampa lista indirizzi
             PrintAddresses(addressList);
             Utility.Divider();
 
+            // Definizione dell'indirizzo file csv per il salvataggio
             string outputFilePath = "C:\\Users\\39327\\source\\repos\\csharp-lista-indirizzi\\csharp-lista-indirizzi\\output_addresses.csv";
+
+            // Salvataggio file csv con i parametri: lista indirizzi e l'indirizzo per il salvataggio
             SaveAddressesToFile(addressList, outputFilePath);
             Utility.Divider();
         }
 
+        // Metodo per la lettura file csv
         private static List<Address> ReadAddressesFromFile(string filePath)
         {
             List<Address> addressList = new List<Address>();
@@ -26,7 +35,7 @@ namespace csharp_lista_indirizzi
             {
                 using (var reader = new StreamReader(filePath))
                 {
-                    reader.ReadLine(); // Ignore the header
+                    reader.ReadLine(); 
 
                     while (!reader.EndOfStream)
                     {
@@ -62,9 +71,9 @@ namespace csharp_lista_indirizzi
             return addressList;
         }
 
+        // Funzione di verifica lunghezza riga/tupla
         private static bool IsValidRow(string[] values, string line)
         {
-            // Check the number of fields
             if (values.Length < 6)
             {
                 Console.WriteLine($"\nAttention!! The CSV file does not have enough values in this row --> {line}");
@@ -76,7 +85,6 @@ namespace csharp_lista_indirizzi
                 return false;
             }
 
-            // Check for empty fields
             List<string> emptyFields = CheckEmptyFields(values);
             if (emptyFields.Any())
             {
@@ -87,6 +95,7 @@ namespace csharp_lista_indirizzi
             return true;
         }
 
+        // Funzione di controllo attributi mancanti 
         private static List<string> CheckEmptyFields(string[] values)
         {
             List<string> emptyFields = new List<string>();
@@ -100,6 +109,7 @@ namespace csharp_lista_indirizzi
             return emptyFields;
         }
 
+        // Metodo per la stampa degli indirizzi
         private static void PrintAddresses(List<Address> addresses)
         {
             Utility.Divider();
@@ -115,16 +125,15 @@ namespace csharp_lista_indirizzi
             }
         }
 
+        // Metodo per il salvataggio file csv
         private static void SaveAddressesToFile(List<Address> addresses, string filePath)
         {
             try
             {
                 using (StreamWriter writer = new StreamWriter(filePath))
                 {
-                    // Scrivi la riga dell'intestazione con i nomi delle colonne
                     writer.WriteLine("Name,Surname,Street,City,Province,ZIP");
 
-                    // Scrivi ciascun indirizzo nel file
                     foreach (var address in addresses)
                     {
                         writer.WriteLine($"{address.Name},{address.Surname},{address.Street},{address.City},{address.Province},{address.ZIP}");
