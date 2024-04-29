@@ -6,14 +6,96 @@ using System.Threading.Tasks;
 
 namespace csharp_lista_indirizzi
 {
-    class Address
+    public class Address
     {
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        private string _name;
+        private string _surname;
+        private string _province;
+        private string _zip;
+
+        public string Name
+        {
+            get { return _name; }
+            set
+            {
+                string trimmedValue = value?.Trim();
+
+                if (string.IsNullOrEmpty(trimmedValue) || trimmedValue.Length < 3)
+                {
+                    throw new ArgumentException("Name must contain at least 3 characters.");
+                }
+
+                _name = trimmedValue;
+            }
+        }
+
+
+        public string Surname
+        {
+            get { return _surname; }
+            set
+            {
+                string trimmedValue = value?.Trim();
+
+                if (string.IsNullOrEmpty(trimmedValue) || trimmedValue.Length < 3)
+                {
+                    throw new ArgumentException("Surname must contain at least 3 characters.");
+                }
+
+                _surname = trimmedValue;
+            }
+        }
+
+
         public string Street { get; set; }
         public string City { get; set; }
-        public string Province { get; set; }
-        public string ZIP { get; set; }
+
+        public string Province
+        {
+            get { return _province; }
+            set
+            {
+                string trimmedValue = value.Trim(); // Trim once and use this trimmed value throughout
+
+                // Check if the trimmed value is empty
+                if (string.IsNullOrEmpty(trimmedValue))
+                {
+                    throw new ArgumentException("Province cannot be empty or just whitespace.");
+                }
+                // Check for length constraints
+                if (trimmedValue.Length > 2)
+                {
+                    throw new ArgumentException("Province must be a maximum of 2 characters long.");
+                }
+                // Check for character validity
+                if (!trimmedValue.All(char.IsLetter))
+                {
+                    throw new ArgumentException("Province should contain only letters.");
+                }
+
+                _province = trimmedValue;
+            }
+        }
+
+
+        public string ZIP
+        {
+            get { return _zip; }
+            set
+            {
+                string trimmedValue = value.Trim();
+                if (!trimmedValue.All(char.IsNumber))
+                {
+                    throw new ArgumentException("ZIP should contain only numbers");
+                }
+                if (trimmedValue.Length > 5)
+                {
+                    throw new ArgumentException("ZIP must be a maximum of 5 characters");
+                }
+                _zip = trimmedValue.PadLeft(5, '0');
+            }
+        }
+
 
         public Address(string name, string surname, string street, string city, string province, string zip)
         {
@@ -24,12 +106,5 @@ namespace csharp_lista_indirizzi
             Province = province;
             ZIP = zip;
         }
-
-        public override string ToString()
-        {
-            return $"Name: {Name}, Surname: {Surname}, Street: {Street}, City: {City}, Province: {Province}, ZIP: {ZIP}";
-        }
     }
-
-
 }
